@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QR Kod Oluşturucu</title>
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+</head>
+<body>
+
+  <h2>Linkinizi QR Koda Dönüştürün</h2>
+
+  <input type="text" id="link-input" placeholder="Bir link girin..." style="width: 300px; padding: 5px;">
+  <button onclick="generateQRCode()">QR Kod Oluştur</button>
+
+  <div id="qrcode" style="margin-top: 20px;"></div>
+
+  <script>
+    function generateQRCode() {
+      var link = document.getElementById("link-input").value;
+      var qrcodeDiv = document.getElementById("qrcode");
+
+      // Önceki QR kodunu temizle
+      qrcodeDiv.innerHTML = "";
+
+      // Yeni QR kodunu oluştur
+      var qrcode = new QRCode(qrcodeDiv, {
+        text: link,
+        width: 128,
+        height: 128
+      });
+    }
+  </script>
+
+</body>
+</html>
