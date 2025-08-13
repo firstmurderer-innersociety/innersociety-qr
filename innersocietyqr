@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inner Society QR Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+</head>
+<body style="font-family: 'Segoe UI'; padding: 20px; background-color: #f9f9f9;">
+
+  <h2 style="color: #2C3E50;">🔗 Inner Society QR Generator</h2>
+
+  <input type="text" id="link-input" placeholder="Paste your Inner Society link..." 
+         style="width: 300px; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+  <button onclick="generateQRCode()" 
+          style="padding: 8px 12px; margin-left: 10px; background-color: #27AE60; color: white; border: none; border-radius: 5px;">
+    Generate QR
+  </button>
+
+  <div id="qrcode" style="margin-top: 20px; padding: 10px; border: 1px dashed #aaa; display: inline-block;"></div>
+
+  <br><br>
+  <button id="download-btn" onclick="downloadQRCode()" 
+          style="display: none; padding: 8px 12px; background-color: #2980B9; color: white; border: none; border-radius: 5px;">
+    Download QR Code
+  </button>
+
+  <script>
+    let qrCanvas;
+
+    function generateQRCode() {
+      const link = document.getElementById("link-input").value;
+      const qrcodeDiv = document.getElementById("qrcode");
+      qrcodeDiv.innerHTML = "";
+
+      const qr = new QRCode(qrcodeDiv, {
+        text: link,
+        width: 128,
+        height: 128
+      });
+
+      // QR kodun oluşması biraz zaman alabilir, bu yüzden kısa bir gecikme ile canvas'ı yakalıyoruz
+      setTimeout(() => {
+        qrCanvas = qrcodeDiv.querySelector("canvas");
+        document.getElementById("download-btn").style.display = "inline-block";
+      }, 500);
+    }
+
+    function downloadQRCode() {
+      if (!qrCanvas) return;
+      const link = document.createElement("a");
+      link.href = qrCanvas.toDataURL("image/png");
+      link.download = "innersociety_qr.png";
+      link.click();
+    }
+  </script>
+
+</body>
+</html>
